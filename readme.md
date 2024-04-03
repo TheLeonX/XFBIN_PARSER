@@ -12,3 +12,5 @@ If you want to get rid from buttons in context menu when you right click on file
 - HKEY_CLASSES_ROOT\\.xfbin
 - HKEY_CLASSES_ROOT\\XFBIN
 - HKEY_CLASSES_ROOT\\Folder\\shell\\XFBIN_PARSER
+
+To edit registry, press on Win+R and write in command line "regedit".
