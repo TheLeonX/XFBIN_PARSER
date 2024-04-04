@@ -18,4 +18,4 @@ E:\Desktop\C# Projects\XFBIN_PARSER\obj\Debug\net7.0\XFBIN_PARSER.genruntimeconf
 E:\Desktop\C# Projects\XFBIN_PARSER\obj\Debug\net7.0\ref\XFBIN_PARSER.dll
 E:\Desktop\C# Projects\XFBIN_PARSER\bin\Debug\net7.0\Newtonsoft.Json.dll
 E:\Desktop\C# Projects\XFBIN_PARSER\bin\Debug\net7.0\MiscUtil.dll
-E:\Desktop\C# Projects\XFBIN_PARSER\bin\Debug\net7.0\readme.txt
+E:\Desktop\C# Projects\XFBIN_PARSER\bin\Debug\net7.0\Uninstall_XFBIN_Parser.bat
