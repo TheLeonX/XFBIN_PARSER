@@ -58,40 +58,63 @@ namespace ConsoleApplication3 {
             }
         }
 
-        public static void UnpackXFBIN(string path) {
+        public static void UnpackXFBIN(string path)
+        {
             S_XFBIN_READER.ReadXFBIN(path);
-            string dir_path = Path.GetDirectoryName(path) + "\\" + Path.GetFileNameWithoutExtension(path);
-            if (Directory.Exists(dir_path))
-                Directory.Delete(dir_path, true);
-            Directory.CreateDirectory(dir_path);
-            foreach (PAGE page in S_XFBIN_READER.XfbinFile.Pages) {
-                Directory.CreateDirectory(dir_path + "\\" + page.PageName);
-                using (FileStream fs = new FileStream(dir_path + "\\" + page.PageName + "\\_page.json", FileMode.Create)) {
-                    var options = new JsonSerializerOptions {
-                        WriteIndented = true,
-                    };
-                    options.Converters.Add(new PageConverter());
+            string dirPath = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
+            if (Directory.Exists(dirPath))
+                Directory.Delete(dirPath, true);
+            Directory.CreateDirectory(dirPath);
 
-                    JsonSerializer.Serialize(fs, page, options);
-                }
-                foreach (CHUNK chunk in page.Chunks) {
+            // Register code pages to support windows-1251 if not already registered
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            foreach (PAGE page in S_XFBIN_READER.XfbinFile.Pages)
+            {
+                string pageDir = Path.Combine(dirPath, page.PageName);
+                Directory.CreateDirectory(pageDir);
+
+                // Serialize page to JSON string using UTF-8 by default.
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                };
+                options.Converters.Add(new PageConverter());
+                string json = JsonSerializer.Serialize(page, options);
+
+                // Convert the JSON string to Windows-1251 encoding.
+                byte[] windows1251Json = Encoding.GetEncoding("windows-1251").GetBytes(json);
+                string jsonFilePath = Path.Combine(pageDir, "_page.json");
+                File.WriteAllBytes(jsonFilePath, windows1251Json);
+
+                foreach (CHUNK chunk in page.Chunks)
+                {
                     string format = ".bin";
-                    string type = S_XFBIN_READER.XfbinFile.ChunkTable.ChunkTypes[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[(int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkTypeIndex].ChunkTypeName;
+                    string type = S_XFBIN_READER.XfbinFile.ChunkTable.ChunkTypes[
+                        (int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[
+                            (int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[
+                                (int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkTypeIndex].ChunkTypeName;
                     if (PageConverter.file_format.ContainsKey(type))
                         format = PageConverter.file_format[type];
                     if (type != "nuccChunkNull" &&
                         type != "nuccChunkPage" &&
                         type != "nuccChunkIndex")
-                        File.WriteAllBytes(dir_path + "\\" + page.PageName + "\\" + S_XFBIN_READER.XfbinFile.ChunkTable.ChunkNames[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[(int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkNameIndex].ChunkName + format, chunk.ChunkData);
+                    {
+                        string chunkFileName = S_XFBIN_READER.XfbinFile.ChunkTable.ChunkNames[
+                            (int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[
+                                (int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[
+                                    (int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkNameIndex].ChunkName;
+                        string chunkFilePath = Path.Combine(pageDir, chunkFileName + format);
+                        File.WriteAllBytes(chunkFilePath, chunk.ChunkData);
+                    }
                 }
             }
             Console.WriteLine("Saved json");
-
-
         }
 
-        
-            
+
+
+
     }
     static class FileAssociationHelper {
         public static void AssociateFileExtension
