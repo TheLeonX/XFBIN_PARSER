@@ -17,97 +17,92 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
-namespace ConsoleApplication3 {
-    public class Program {
-        public static XFBIN_READER S_XFBIN_READER =  new XFBIN_READER();
-        public static void Main(string[] args) {
+namespace ConsoleApplication3
+{
+    public class Program
+    {
+        public static XFBIN_READER S_XFBIN_READER = new XFBIN_READER();
+        public static void Main(string[] args)
+        {
+            try
+            {
+                //to get rid from this, you need to delete folders from registry HKEY_CLASSES_ROOT\.xfbin, HKEY_CLASSES_ROOT\XFBIN and HKEY_CLASSES_ROOT\Folder\shell\XFBIN_PARSER
+                RegistryKey key;
+                key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER");
+                key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER\command");
+                key.SetValue("", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe") + " %1");
+                FileAssociationHelper.AssociateFileExtension(".xfbin", "XFBIN", "XFBIN", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe"));
 
-            //to get rid from this, you need to delete folders from registry HKEY_CLASSES_ROOT\.xfbin, HKEY_CLASSES_ROOT\XFBIN and HKEY_CLASSES_ROOT\Folder\shell\XFBIN_PARSER
-            RegistryKey key;
-            key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER");
-            key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER\command");
-            key.SetValue("", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll",".exe") +" %1");
-            FileAssociationHelper.AssociateFileExtension(".xfbin", "XFBIN", "XFBIN", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe"));
+                string path = "";
+                if (args.Length > 0)
+                {
+                    args[0] = String.Join(" ", args);
+                    path = Path.GetFullPath(args[0]);
+                } else
+                {
+                    Console.Write("Write path of file/directory: ");
+                    path = Console.ReadLine();
+                    path = path.Replace("\"", "");
+                    path = path.Replace("\\", "\\\\");
 
-            string path = "";
-            if (args.Length > 0) {
-                args[0] = String.Join(" ", args);
-                path = Path.GetFullPath(args[0]);
-            } else {
-                Console.Write("Write path of file/directory: ");
-                path = Console.ReadLine();
-                path = path.Replace("\"", "");
-                path = path.Replace("\\", "\\\\");
-
+                }
+                FileAttributes attr = File.GetAttributes(path);
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    XFBIN_WRITER.RepackXFBIN(path);
+                else
+                    UnpackXFBIN(path);
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Console.ReadLine();
             }
-            FileAttributes attr = File.GetAttributes(path);
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-                XFBIN_WRITER.RepackXFBIN(path);
-            else
-                UnpackXFBIN(path);
         }
 
         public static void UnpackXFBIN(string path)
         {
             S_XFBIN_READER.ReadXFBIN(path);
-            string dirPath = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
-            if (Directory.Exists(dirPath))
-                Directory.Delete(dirPath, true);
-            Directory.CreateDirectory(dirPath);
-
-            // Register code pages to support windows-1251 if not already registered
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
+            string dir_path = Path.GetDirectoryName(path) + "\\" + Path.GetFileNameWithoutExtension(path);
+            if (Directory.Exists(dir_path))
+                Directory.Delete(dir_path, true);
+            Directory.CreateDirectory(dir_path);
             foreach (PAGE page in S_XFBIN_READER.XfbinFile.Pages)
             {
-                string pageDir = Path.Combine(dirPath, page.PageName);
-                Directory.CreateDirectory(pageDir);
-
-                // Serialize page to JSON string using UTF-8 by default.
-                var options = new JsonSerializerOptions
+                Directory.CreateDirectory(dir_path + "\\" + page.PageName);
+                using (FileStream fs = new FileStream(dir_path + "\\" + page.PageName + "\\_page.json", FileMode.Create))
                 {
-                    WriteIndented = true,
-                };
-                options.Converters.Add(new PageConverter());
-                string json = JsonSerializer.Serialize(page, options);
+                    var options = new JsonSerializerOptions
+                    {
+                        WriteIndented = true,
+                    };
+                    options.Converters.Add(new PageConverter());
 
-                // Convert the JSON string to Windows-1251 encoding.
-                byte[] windows1251Json = Encoding.GetEncoding("windows-1251").GetBytes(json);
-                string jsonFilePath = Path.Combine(pageDir, "_page.json");
-                File.WriteAllBytes(jsonFilePath, windows1251Json);
-
+                    JsonSerializer.Serialize(fs, page, options);
+                }
                 foreach (CHUNK chunk in page.Chunks)
                 {
                     string format = ".bin";
-                    string type = S_XFBIN_READER.XfbinFile.ChunkTable.ChunkTypes[
-                        (int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[
-                            (int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[
-                                (int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkTypeIndex].ChunkTypeName;
+                    string type = S_XFBIN_READER.XfbinFile.ChunkTable.ChunkTypes[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[(int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkTypeIndex].ChunkTypeName;
                     if (PageConverter.file_format.ContainsKey(type))
                         format = PageConverter.file_format[type];
                     if (type != "nuccChunkNull" &&
                         type != "nuccChunkPage" &&
                         type != "nuccChunkIndex")
-                    {
-                        string chunkFileName = S_XFBIN_READER.XfbinFile.ChunkTable.ChunkNames[
-                            (int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[
-                                (int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[
-                                    (int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkNameIndex].ChunkName;
-                        string chunkFilePath = Path.Combine(pageDir, chunkFileName + format);
-                        File.WriteAllBytes(chunkFilePath, chunk.ChunkData);
-                    }
+                        File.WriteAllBytes(dir_path + "\\" + page.PageName + "\\" + S_XFBIN_READER.XfbinFile.ChunkTable.ChunkNames[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[(int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkNameIndex].ChunkName + format, chunk.ChunkData);
                 }
             }
             Console.WriteLine("Saved json");
+
+
         }
 
 
 
-
     }
-    static class FileAssociationHelper {
+    static class FileAssociationHelper
+    {
         public static void AssociateFileExtension
-        (string fileExtension, string name, string description, string appPath) {
+        (string fileExtension, string name, string description, string appPath)
+        {
             //Create a key with specified file extension
             RegistryKey _extensionKey = Registry.ClassesRoot.CreateSubKey(fileExtension);
             _extensionKey.SetValue("", name);

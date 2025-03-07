@@ -3,6 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_PARSER\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin_reader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\converter\\pageconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1628A04E-DE9A-48F1-B993-990024E6CB61}|XFBIN_PARSER.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_parser\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1628A04E-DE9A-48F1-B993-990024E6CB61}|XFBIN_PARSER.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -10,13 +16,13 @@
       "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin_writer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin_reader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\converter\\pageconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin\\chunk_table.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin\\xfbin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin\\page.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin_lib.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
@@ -27,12 +33,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin_lib.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin\\page.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{28F21BC8-A970-4C86-A2FB-D17E99604D8F}|..\\XFBIN_LIB\\XFBIN_LIB.csproj|c:\\users\\ardor\\desktop\\c# projects\\xfbin_lib\\xfbin\\chunk_table.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,24 +42,24 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "XFBIN_WRITER.cs",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN_WRITER.cs",
               "RelativeDocumentMoniker": "..\\XFBIN_LIB\\XFBIN_WRITER.cs",
-              "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN_WRITER.cs*",
-              "RelativeToolTip": "..\\XFBIN_LIB\\XFBIN_WRITER.cs*",
-              "ViewState": "AgIAAIkAAAAAAAAAAAAAAJgAAAAzAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN_WRITER.cs",
+              "RelativeToolTip": "..\\XFBIN_LIB\\XFBIN_WRITER.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgBAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T07:48:56.561Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "XFBIN_LIB.csproj",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN_LIB.csproj",
               "RelativeDocumentMoniker": "..\\XFBIN_LIB\\XFBIN_LIB.csproj",
@@ -71,7 +71,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "XFBIN_PARSER.csproj",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_PARSER\\XFBIN_PARSER.csproj",
               "RelativeDocumentMoniker": "XFBIN_PARSER.csproj",
@@ -83,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "XFBIN_LIB",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN_LIB.csproj",
               "RelativeDocumentMoniker": "..\\XFBIN_LIB\\XFBIN_LIB.csproj",
@@ -94,58 +94,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "PageConverter.cs",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\Converter\\PageConverter.cs",
               "RelativeDocumentMoniker": "..\\XFBIN_LIB\\Converter\\PageConverter.cs",
-              "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\Converter\\PageConverter.cs*",
-              "RelativeToolTip": "..\\XFBIN_LIB\\Converter\\PageConverter.cs*",
-              "ViewState": "AgIAALYAAAAAAAAAAAAAwN0AAAAJAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\Converter\\PageConverter.cs",
+              "RelativeToolTip": "..\\XFBIN_LIB\\Converter\\PageConverter.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAPQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T07:47:49.962Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "XFBIN_READER.cs",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN_READER.cs",
               "RelativeDocumentMoniker": "..\\XFBIN_LIB\\XFBIN_READER.cs",
-              "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN_READER.cs*",
-              "RelativeToolTip": "..\\XFBIN_LIB\\XFBIN_READER.cs*",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAAAC0BAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN_READER.cs",
+              "RelativeToolTip": "..\\XFBIN_LIB\\XFBIN_READER.cs",
+              "ViewState": "AgIAANMAAAAAAAAAAAAuwFQBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T07:47:49.964Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_PARSER\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_PARSER\\Program.cs*",
-              "RelativeToolTip": "Program.cs*",
-              "ViewState": "AgIAACYAAAAAAAAAAAAuwDkAAAANAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_PARSER\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAgwDIAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T07:47:49.966Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "PAGE.cs",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN\\PAGE.cs",
               "RelativeDocumentMoniker": "..\\XFBIN_LIB\\XFBIN\\PAGE.cs",
               "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN\\PAGE.cs",
               "RelativeToolTip": "..\\XFBIN_LIB\\XFBIN\\PAGE.cs",
-              "ViewState": "AQIAAC0AAAAAAAAAAAA4wDgAAAAFAAAA",
+              "ViewState": "AgIAAC4AAAAAAAAAAAA0wDgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T07:47:49.967Z"
+              "WhenOpened": "2025-03-07T07:47:49.967Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "XFBIN.cs",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN\\XFBIN.cs",
               "RelativeDocumentMoniker": "..\\XFBIN_LIB\\XFBIN\\XFBIN.cs",
@@ -158,15 +159,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 4,
               "Title": "CHUNK_TABLE.cs",
               "DocumentMoniker": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN\\CHUNK_TABLE.cs",
               "RelativeDocumentMoniker": "..\\XFBIN_LIB\\XFBIN\\CHUNK_TABLE.cs",
               "ToolTip": "C:\\Users\\ARDOR\\Desktop\\C# Projects\\XFBIN_LIB\\XFBIN\\CHUNK_TABLE.cs",
               "RelativeToolTip": "..\\XFBIN_LIB\\XFBIN\\CHUNK_TABLE.cs",
-              "ViewState": "AQIAAEIAAAAAAAAAAAAgwFcAAAAuAAAA",
+              "ViewState": "AgIAAEIAAAAAAAAAAAA1wFcAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T07:47:49.971Z"
+              "WhenOpened": "2025-03-07T07:47:49.971Z",
+              "EditorCaption": ""
             }
           ]
         }
