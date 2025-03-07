@@ -20,31 +20,42 @@ using System.Runtime.InteropServices;
 namespace ConsoleApplication3 {
     public class Program {
         public static XFBIN_READER S_XFBIN_READER =  new XFBIN_READER();
-        public static void Main(string[] args) {
+        public static void Main(string[] args)
+        {
+            try
+            {
+                // Delete registry folders if needed
+                RegistryKey key;
+                key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER");
+                key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER\command");
+                key.SetValue("", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe") + " %1");
+                FileAssociationHelper.AssociateFileExtension(".xfbin", "XFBIN", "XFBIN", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe"));
 
-            //to get rid from this, you need to delete folders from registry HKEY_CLASSES_ROOT\.xfbin, HKEY_CLASSES_ROOT\XFBIN and HKEY_CLASSES_ROOT\Folder\shell\XFBIN_PARSER
-            RegistryKey key;
-            key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER");
-            key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER\command");
-            key.SetValue("", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll",".exe") +" %1");
-            FileAssociationHelper.AssociateFileExtension(".xfbin", "XFBIN", "XFBIN", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe"));
+                string path = "";
+                if (args.Length > 0)
+                {
+                    args[0] = String.Join(" ", args);
+                    path = Path.GetFullPath(args[0]);
+                } else
+                {
+                    Console.Write("Write path of file/directory: ");
+                    path = Console.ReadLine();
+                    path = path.Replace("\"", "");
+                    path = path.Replace("\\", "\\\\");
+                }
+                FileAttributes attr = File.GetAttributes(path);
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                    XFBIN_WRITER.RepackXFBIN(path);
+                else
+                    UnpackXFBIN(path);
 
-            string path = "";
-            if (args.Length > 0) {
-                args[0] = String.Join(" ", args);
-                path = Path.GetFullPath(args[0]);
-            } else {
-                Console.Write("Write path of file/directory: ");
-                path = Console.ReadLine();
-                path = path.Replace("\"", "");
-                path = path.Replace("\\", "\\\\");
-
+            } catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred:");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
             }
-            FileAttributes attr = File.GetAttributes(path);
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-                XFBIN_WRITER.RepackXFBIN(path);
-            else
-                UnpackXFBIN(path);
         }
 
         public static void UnpackXFBIN(string path) {
