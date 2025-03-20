@@ -61,38 +61,49 @@ namespace ConsoleApplication3
         public static void UnpackXFBIN(string path)
         {
             S_XFBIN_READER.ReadXFBIN(path);
-            string dir_path = Path.GetDirectoryName(path) + "\\" + Path.GetFileNameWithoutExtension(path);
-            if (Directory.Exists(dir_path))
-                Directory.Delete(dir_path, true);
-            Directory.CreateDirectory(dir_path);
-            foreach (PAGE page in S_XFBIN_READER.XfbinFile.Pages)
-            {
-                Directory.CreateDirectory(dir_path + "\\" + page.PageName);
-                using (FileStream fs = new FileStream(dir_path + "\\" + page.PageName + "\\_page.json", FileMode.Create))
-                {
-                    var options = new JsonSerializerOptions
-                    {
-                        WriteIndented = true,
-                    };
-                    options.Converters.Add(new PageConverter());
+            var xfbin = S_XFBIN_READER.XfbinFile;
+            string dirPath = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
+            if (Directory.Exists(dirPath))
+                Directory.Delete(dirPath, true);
+            Directory.CreateDirectory(dirPath);
 
+            foreach (PAGE page in xfbin.Pages)
+            {
+                string pageDir = Path.Combine(dirPath, page.PageName);
+                Directory.CreateDirectory(pageDir);
+
+                // Save page JSON
+                string jsonPath = Path.Combine(pageDir, "_page.json");
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                options.Converters.Add(new PageConverter());
+                using (var fs = new FileStream(jsonPath, FileMode.Create))
+                {
                     JsonSerializer.Serialize(fs, page, options);
                 }
+
+                // Save each chunk file
                 foreach (CHUNK chunk in page.Chunks)
                 {
+                    int mapIndex = (int)chunk.ChunkMapIndex;
+                    var chunkMapIndex = xfbin.ChunkTable.ChunkMapIndices[mapIndex].ChunkMapIndex;
+                    var chunkMap = xfbin.ChunkTable.ChunkMaps[(int)chunkMapIndex];
+                    string type = xfbin.ChunkTable.ChunkTypes[(int)chunkMap.ChunkTypeIndex].ChunkTypeName;
+
+                    // Determine file format/extension
                     string format = ".bin";
-                    string type = S_XFBIN_READER.XfbinFile.ChunkTable.ChunkTypes[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[(int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkTypeIndex].ChunkTypeName;
-                    if (PageConverter.file_format.ContainsKey(type))
-                        format = PageConverter.file_format[type];
-                    if (type != "nuccChunkNull" &&
-                        type != "nuccChunkPage" &&
-                        type != "nuccChunkIndex")
-                        File.WriteAllBytes(dir_path + "\\" + page.PageName + "\\" + S_XFBIN_READER.XfbinFile.ChunkTable.ChunkNames[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMaps[(int)S_XFBIN_READER.XfbinFile.ChunkTable.ChunkMapIndices[(int)chunk.ChunkMapIndex].ChunkMapIndex].ChunkNameIndex].ChunkName + format, chunk.ChunkData);
+                    if (PageConverter.file_format.TryGetValue(type, out string ext))
+                        format = ext;
+
+                    // Skip types that shouldn't be unpacked
+                    if (type == "nuccChunkNull" || type == "nuccChunkPage" || type == "nuccChunkIndex")
+                        continue;
+
+                    string chunkName = xfbin.ChunkTable.ChunkNames[(int)chunkMap.ChunkNameIndex].ChunkName;
+                    string filePath = Path.Combine(pageDir, chunkName + format);
+                    File.WriteAllBytes(filePath, chunk.ChunkData);
                 }
             }
             Console.WriteLine("Saved json");
-
-
         }
 
 
