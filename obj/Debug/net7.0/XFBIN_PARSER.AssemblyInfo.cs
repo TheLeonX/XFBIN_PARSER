@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("XFBIN_PARSER")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f75bfcc982ad09c92f2135dec047912c7dd2ac4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a94070c9566b149dd717787ad4c50cce66fa090")]
 [assembly: System.Reflection.AssemblyProductAttribute("XFBIN_PARSER")]
 [assembly: System.Reflection.AssemblyTitleAttribute("XFBIN_PARSER")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
