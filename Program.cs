@@ -16,6 +16,7 @@ using MiscUtil.Conversion;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
+using System.Runtime.ConstrainedExecution;
 
 namespace ConsoleApplication3
 {
@@ -26,12 +27,12 @@ namespace ConsoleApplication3
         {
             try
             {
-                //to get rid from this, you need to delete folders from registry HKEY_CLASSES_ROOT\.xfbin, HKEY_CLASSES_ROOT\XFBIN and HKEY_CLASSES_ROOT\Folder\shell\XFBIN_PARSER
-                RegistryKey key;
-                key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER");
-                key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER\command");
-                key.SetValue("", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe") + " %1");
-                FileAssociationHelper.AssociateFileExtension(".xfbin", "XFBIN", "XFBIN", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe"));
+                ////to get rid from this, you need to delete folders from registry HKEY_CLASSES_ROOT\.xfbin, HKEY_CLASSES_ROOT\XFBIN and HKEY_CLASSES_ROOT\Folder\shell\XFBIN_PARSER
+                //RegistryKey key;
+                //key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER");
+                //key = Registry.ClassesRoot.CreateSubKey(@"Folder\shell\XFBIN_PARSER\command");
+                //key.SetValue("", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe") + " %1");
+                //FileAssociationHelper.AssociateFileExtension(".xfbin", "XFBIN", "XFBIN", System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe"));
 
                 string path = "";
                 if (args.Length > 0)
